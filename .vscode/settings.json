@@ -1,0 +1,15 @@
+{
+  "java.compile.nullAnalysis.mode": "automatic",
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "database": "real_time_chat_db",
+      "username": "postgres",
+      "name": "PostgreSQL Local",
+      "password": "postgres"
+    }
+  ]
+}
