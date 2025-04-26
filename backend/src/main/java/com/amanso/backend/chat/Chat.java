@@ -3,6 +3,7 @@ package com.amanso.backend.chat;
 import com.amanso.backend.common.BaseAuditingEntity;
 import com.amanso.backend.message.Message;
 import com.amanso.backend.message.MessageState;
+import com.amanso.backend.message.MessageType;
 import com.amanso.backend.user.User;
 
 import jakarta.persistence.Entity;
@@ -11,6 +12,8 @@ import jakarta.persistence.GeneratedValue;
 import static jakarta.persistence.GenerationType.UUID;
 
 import java.beans.Transient;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import jakarta.persistence.Id;
@@ -77,16 +80,33 @@ public class Chat extends BaseAuditingEntity {
     }
 
     /*
-     * Get the last message from the messages list. If the list is empty, return
-     * null. Otherwise, return the content of the first message in the list.
-     * 
+     * Returns the content of the latest message.
+     * If there are no messages, returns null.
+     * If the last message is not of type TEXT, returns "Attachment".
      */
     @Transient
     public String getLastMessage() {
         if (messages.isEmpty()) {
             return null;
         }
-        return messages.get(0).getContent();
+
+        Message lastMessage = messages.get(0);
+        return lastMessage.getType() == MessageType.TEXT
+                ? lastMessage.getContent()
+                : "Attachment";
+    }
+
+    /*
+     * Returns the date of the latest message.
+     * If there are no messages, returns null.
+     */
+    @Transient
+    public LocalDateTime getLastMessageTime() {
+        if (messages.isEmpty()) {
+            return null;
+        }
+
+        return messages.get(0).getCreatedDate();
     }
 
 }
