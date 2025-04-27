@@ -12,7 +12,6 @@ import jakarta.persistence.GeneratedValue;
 import static jakarta.persistence.GenerationType.UUID;
 
 import java.beans.Transient;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -90,7 +89,7 @@ public class Chat extends BaseAuditingEntity {
             return null;
         }
 
-        Message lastMessage = messages.get(0);
+        Message lastMessage = messages.get(messages.size() - 1);
         return lastMessage.getType() == MessageType.TEXT
                 ? lastMessage.getContent()
                 : "Attachment";
@@ -106,7 +105,7 @@ public class Chat extends BaseAuditingEntity {
             return null;
         }
 
-        return messages.get(0).getCreatedDate();
+        return messages.get(messages.size() - 1).getCreatedDate();
     }
 
 }
