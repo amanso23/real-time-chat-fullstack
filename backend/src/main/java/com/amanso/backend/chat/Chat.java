@@ -45,6 +45,7 @@ import lombok.Setter;
  * where the sender ID matches the provided sender ID and the receiver ID
  * matches the provided receiver ID, or vice versa. The results are ordered by
  * the created date in descending order.
+ *
  */
 @NamedQuery(name = ChatConstants.FIND_CHAT_BY_SENDER_ID_AND_RECEIVER_ID, query = "SELECT DISTINCT c FROM Chat c WHERE (c.sender.id = :senderId AND c.receiver.id = :receiverId) OR (c.sender.id = :receiverId AND c.receiver.id = :senderId) ORDER BY c.createdDate DESC")
 /*
@@ -82,7 +83,6 @@ public class Chat extends BaseAuditingEntity {
         } else {
             return sender.getFirstName() + " " + sender.getLastName();
         }
-
     }
 
     /*
@@ -91,7 +91,7 @@ public class Chat extends BaseAuditingEntity {
      * and the message state is SENT. It returns the count of such messages.
      */
     @Transient
-    public Long getUnreadMessages(final String senderId) {
+    public Long getUnreadMessagesCount(final String senderId) {
         return messages
                 .stream()
                 .filter(m -> m.getReceiverId().equals(senderId))
