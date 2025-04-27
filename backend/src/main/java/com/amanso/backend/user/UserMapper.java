@@ -16,7 +16,7 @@ public class UserMapper {
         User user = new User();
 
         if (attributes.containsKey("sub")) {
-            user.setId(Long.valueOf((String) attributes.get("sub")));
+            user.setId((String) attributes.get("sub"));
         }
 
         if (attributes.containsKey("given_name")) {
