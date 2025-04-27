@@ -18,6 +18,7 @@ import java.util.List;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
@@ -32,6 +33,26 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name = "chat")
+/*
+ * Query to find chat by sender ID. It retrieves distinct chats where the
+ * sender ID matches the provided sender ID or the receiver ID matches the
+ * provided sender ID. The results are ordered by the created date in
+ * descending order.
+ */
+@NamedQuery(name = ChatConstants.FIND_CHAT_BY_SENDER_ID, query = "SELECT DISTINCT c FROM Chat c WHERE c.sender.id = :senderId OR c.receiver.id = :senderId ORDER BY c.createdDate DESC")
+/*
+ * Query to find chat by sender ID and receiver ID. It retrieves distinct chats
+ * where the sender ID matches the provided sender ID and the receiver ID
+ * matches the provided receiver ID, or vice versa. The results are ordered by
+ * the created date in descending order.
+ */
+@NamedQuery(name = ChatConstants.FIND_CHAT_BY_SENDER_ID_AND_RECEIVER_ID, query = "SELECT DISTINCT c FROM Chat c WHERE (c.sender.id = :senderId AND c.receiver.id = :receiverId) OR (c.sender.id = :receiverId AND c.receiver.id = :senderId) ORDER BY c.createdDate DESC")
+/*
+ * The Chat class represents a chat entity in the system. It contains the
+ * sender and receiver users, a list of messages, and methods to retrieve chat
+ * information such as chat name, unread messages count, last message content,
+ * and last message time.
+ */
 public class Chat extends BaseAuditingEntity {
 
     @Id
