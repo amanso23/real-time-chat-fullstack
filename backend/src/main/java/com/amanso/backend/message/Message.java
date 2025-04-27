@@ -14,6 +14,7 @@ import com.amanso.backend.common.BaseAuditingEntity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -27,6 +28,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name = "messages")
+@NamedQuery(name = MessageConstants.FIND_MESSAGES_BY_CHAT_ID, query = "SELECT m FROM Message m WHERE m.chat.id = :chatId ORDER BY m.createdDate DESC")
+@NamedQuery(name = MessageConstants.SET_MESSAGES_TO_SEEN_BY_CHAT_ID, query = "UPDATE Message m SET m.state = :newState WHERE m.chat.id = :chatId AND m.state = :oldState")
 public class Message extends BaseAuditingEntity {
 
     @Id
