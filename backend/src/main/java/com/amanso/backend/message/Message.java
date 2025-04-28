@@ -8,6 +8,8 @@ import jakarta.persistence.GeneratedValue;
 
 import static jakarta.persistence.GenerationType.SEQUENCE;
 
+import java.time.LocalDateTime;
+
 import com.amanso.backend.chat.Chat;
 import com.amanso.backend.common.BaseAuditingEntity;
 
@@ -28,7 +30,16 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name = "messages")
+/*
+ * Returns all messages for a given chat id, ordered by created date in
+ * descending order. This is used to get all messages for a given chat id.
+ */
 @NamedQuery(name = MessageConstants.FIND_MESSAGES_BY_CHAT_ID, query = "SELECT m FROM Message m WHERE m.chat.id = :chatId ORDER BY m.createdDate DESC")
+/*
+ * Update all messages for a given chat id to a new state, where the old state
+ * is the one that is currently set.
+ * This is used to set all messages to seen for a given chat id.
+ */
 @NamedQuery(name = MessageConstants.SET_MESSAGES_TO_SEEN_BY_CHAT_ID, query = "UPDATE Message m SET m.state = :newState WHERE m.chat.id = :chatId AND m.state = :oldState")
 public class Message extends BaseAuditingEntity {
 
@@ -51,5 +62,7 @@ public class Message extends BaseAuditingEntity {
     private String senderId;
     @Column(name = "receiver_id", nullable = false)
     private String receiverId;
+
+    private String mediaFilePath;
 
 }
