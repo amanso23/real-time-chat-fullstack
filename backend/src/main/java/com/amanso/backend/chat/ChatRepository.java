@@ -10,9 +10,9 @@ import org.springframework.data.repository.query.Param;
 public interface ChatRepository extends JpaRepository<Chat, String> {
 
     @Query(name = ChatConstants.FIND_CHAT_BY_SENDER_ID)
-    public List<Chat> findChatBySenderId(@Param("senderId") String userId);
+    List<Chat> findChatBySenderId(@Param("senderId") String userId);
 
     @Query(name = ChatConstants.FIND_CHAT_BY_SENDER_ID_AND_RECEIVER_ID)
-    public Optional<Chat> findChatBySenderIdAndReceiverId(String senderId, String receiverId);
+    Optional<Chat> findChatBySenderIdAndReceiverId(String senderId, String receiverId);
 
 }
