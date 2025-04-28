@@ -1,8 +1,8 @@
 package com.amanso.backend.message;
 
-import java.time.LocalDateTime;
-
 import org.springframework.stereotype.Service;
+
+import com.amanso.backend.file.FileUtils;
 
 @Service
 public class MessageMapper {
@@ -16,7 +16,8 @@ public class MessageMapper {
                 .type(message.getType())
                 .chatId(message.getChat().getId())
                 .state(message.getState())
-                .createdAt(LocalDateTime.now())
+                .createdAt(message.getCreatedDate())
+                .media(FileUtils.readFileFromLocation(message.getMediaFilePath()))
                 .build();
     }
 
