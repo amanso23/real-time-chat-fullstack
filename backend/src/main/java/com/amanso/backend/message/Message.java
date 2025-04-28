@@ -8,8 +8,6 @@ import jakarta.persistence.GeneratedValue;
 
 import static jakarta.persistence.GenerationType.SEQUENCE;
 
-import java.time.LocalDateTime;
-
 import com.amanso.backend.chat.Chat;
 import com.amanso.backend.common.BaseAuditingEntity;
 
