@@ -1,0 +1,14 @@
+{
+  "properties": [
+    {
+      "name": "spring.security.oauth2.resource-server.jwt.issuer-uri",
+      "type": "java.lang.String",
+      "description": "Path where uploaded media files are stored"
+    },
+    {
+      "name": "spring.application.file.uploads.media-output-path",
+      "type": "java.lang.String",
+      "description": "URI for the JWT token issuer (Keycloak server)."
+    }
+  ]
+}
