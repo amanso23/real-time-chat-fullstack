@@ -39,7 +39,7 @@ public class User extends BaseAuditingEntity {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    private String id;
+    private Long id;
     private String firstName;
     private String lastName;
     private String email;
