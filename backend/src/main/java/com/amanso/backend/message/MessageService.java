@@ -8,6 +8,10 @@ import org.springframework.stereotype.Service;
 import com.amanso.backend.chat.Chat;
 import com.amanso.backend.chat.ChatRepository;
 import com.amanso.backend.file.FileService;
+import com.amanso.backend.file.FileUtils;
+import com.amanso.backend.notification.Notification;
+import com.amanso.backend.notification.NotificationService;
+import com.amanso.backend.notification.NotificationType;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +27,7 @@ public class MessageService {
     private final ChatRepository chatRepository;
     private final MessageMapper mapper;
     private final FileService fileService;
+    private final NotificationService notificationService;
 
     public void saveMessage(MessageRequest messageRequest) {
         Chat chat = chatRepository.findById(messageRequest.getChatId())
@@ -35,7 +40,20 @@ public class MessageService {
         message.setChat(chat);
         message.setType(messageRequest.getType());
         message.setState(MessageState.SENT);
+
         messageRepository.save(message);
+
+        Notification notification = Notification.builder()
+                .chatId(chat.getId())
+                .content(messageRequest.getContent())
+                .senderId(messageRequest.getSenderId())
+                .receiverId(messageRequest.getReceiverId())
+                .chatName(chat.getChatName(messageRequest.getSenderId()))
+                .messageType(messageRequest.getType())
+                .notificationType(NotificationType.MESSAGE)
+                .build();
+
+        notificationService.sendNotification(messageRequest.getReceiverId(), notification);
 
     }
 
@@ -59,6 +77,15 @@ public class MessageService {
         final String recieverId = getRecieverId(chat, authentication);
 
         messageRepository.setMessagesToSeenByChatId(chatId, MessageState.SENT, MessageState.SEEN);
+
+        Notification notification = Notification.builder()
+                .chatId(chat.getId())
+                .receiverId(recieverId)
+                .senderId(getSenderId(chat, authentication))
+                .notificationType(NotificationType.SEEN)
+                .build();
+
+        notificationService.sendNotification(recieverId, notification);
     }
 
     public void uploadMediaMessage(String chatId, MultipartFile file, Authentication authentication) {
@@ -77,7 +104,20 @@ public class MessageService {
         message.setState(MessageState.SENT);
         message.setChat(chat);
         message.setMediaFilePath(filePath);
+
         messageRepository.save(message);
+
+        Notification notification = Notification.builder()
+                .chatId(chat.getId())
+                .senderId(senderId)
+                .receiverId(receiverId)
+                .chatName(chat.getChatName(senderId))
+                .messageType(MessageType.IMAGE)
+                .notificationType(NotificationType.IMAGE)
+                .media(FileUtils.readFileFromLocation(filePath))
+                .build();
+
+        notificationService.sendNotification(receiverId, notification);
 
     }
 
