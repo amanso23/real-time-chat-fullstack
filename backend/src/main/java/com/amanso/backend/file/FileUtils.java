@@ -25,7 +25,7 @@ public class FileUtils {
         try {
             return Files.readAllBytes(Paths.get(filePath));
         } catch (IOException e) {
-            log.error("Error reading file from path: {}", filePath, e);
+            log.error("Error reading file f rom path: {}", filePath, e);
             return new byte[0];
         }
 
