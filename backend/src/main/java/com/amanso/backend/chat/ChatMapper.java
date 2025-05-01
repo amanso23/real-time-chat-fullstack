@@ -13,8 +13,8 @@ public class ChatMapper {
                 .lastMessageContent(chat.getLastMessage())
                 .lastMessageTime(chat.getLastMessageTime())
                 .isRecieverOnline(chat.getReceiver().isOnline())
-                .senderId(chat.getSender().getId())
-                .recieverId(chat.getReceiver().getId())
+                .senderId(String.valueOf(chat.getSender().getId()))
+                .recieverId(String.valueOf((chat.getReceiver().getId())))
                 .build();
 
     }
