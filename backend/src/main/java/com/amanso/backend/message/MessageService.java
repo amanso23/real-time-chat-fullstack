@@ -129,17 +129,17 @@ public class MessageService {
      */
 
     private String getSenderId(Chat chat, Authentication authentication) {
-        if (chat.getSender().getId().equals(authentication.getName())) {
-            return chat.getSender().getId();
+        if (String.valueOf(chat.getSender().getId()).equals(authentication.getName())) {
+            return String.valueOf(chat.getSender().getId());
         }
-        return chat.getReceiver().getId();
+        return String.valueOf(chat.getReceiver().getId());
     }
 
     private String getRecieverId(Chat chat, Authentication authentication) {
-        if (chat.getSender().getId().equals(authentication.getName())) {
-            return chat.getReceiver().getId();
+        if (String.valueOf(chat.getSender().getId()).equals(authentication.getName())) {
+            return String.valueOf(chat.getReceiver().getId());
         }
-        return chat.getSender().getId();
+        return String.valueOf(chat.getSender().getId());
 
     }
 
