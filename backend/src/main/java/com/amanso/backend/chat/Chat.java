@@ -77,7 +77,7 @@ public class Chat extends BaseAuditingEntity {
      * name.
      */
     @Transient
-    public String getChatName(final Long senderId) {
+    public String getChatName(final String senderId) {
         if (sender.getId().equals(senderId)) {
             return receiver.getFirstName() + " " + receiver.getLastName();
         } else {
