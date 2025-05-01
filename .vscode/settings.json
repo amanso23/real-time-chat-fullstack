@@ -11,5 +11,6 @@
       "name": "PostgreSQL Local",
       "password": "postgres"
     }
-  ]
+  ],
+  "java.configuration.updateBuildConfiguration": "interactive"
 }
