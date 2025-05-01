@@ -9,6 +9,11 @@
       "name": "spring.application.file.uploads.media-output-path",
       "type": "java.lang.String",
       "description": "URI for the JWT token issuer (Keycloak server)."
+    },
+    {
+      "name": "spring.springdoc.default-produces-media-type",
+      "type": "java.lang.String",
+      "description": "Default media type for OpenAPI documentation. This is used to set the default produces media type for all endpoints in the application."
     }
   ]
 }
