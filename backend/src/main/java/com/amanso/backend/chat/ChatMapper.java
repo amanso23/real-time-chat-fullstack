@@ -8,7 +8,7 @@ public class ChatMapper {
     public ChatResponse toChatResponse(Chat chat, String userId) {
         return ChatResponse.builder()
                 .id(chat.getId())
-                .name(chat.getChatName(Long.parseLong(userId)))
+                .name(chat.getChatName(userId))
                 .unreadMessagesCount(chat.getUnreadMessagesCount(userId))
                 .lastMessageContent(chat.getLastMessage())
                 .lastMessageTime(chat.getLastMessageTime())
