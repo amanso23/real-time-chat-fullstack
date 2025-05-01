@@ -12,12 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.amanso.backend.common.StringResponse;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
 @RequestMapping("/api/v1/chats")
 @RequiredArgsConstructor
+@Tag(name = "Chat", description = "Chat API")
 public class ChatController {
 
     private final ChatService chatService;
