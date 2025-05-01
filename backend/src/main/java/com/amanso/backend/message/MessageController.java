@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RestController
 @RequestMapping("/api/v1/messages")
 @RequiredArgsConstructor
+@Tag(name = "Message", description = "Message API")
 public class MessageController {
 
     private final MessageService messageService;
@@ -45,7 +48,8 @@ public class MessageController {
      */
     @PostMapping(value = "/upload-media", consumes = "multipart/form-data")
     @ResponseStatus(HttpStatus.CREATED)
-    public void uploadMediaMessage(@RequestParam("chat-id") String chatId, @RequestParam("file") MultipartFile file,
+    public void uploadMediaMessage(
+            @Parameter() @RequestParam("chat-id") String chatId, @RequestParam("file") MultipartFile file,
             Authentication authentication) {
         messageService.uploadMediaMessage(chatId, file, authentication);
 
