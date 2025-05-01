@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RestController
 @RequestMapping("/api/v1/chats")
 @RequiredArgsConstructor
-@Tag(name = "Chat", description = "Chat API")
+@Tag(name = "Chat", description = "A controller for managing chats")
 public class ChatController {
 
     private final ChatService chatService;
