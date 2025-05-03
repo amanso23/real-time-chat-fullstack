@@ -10,22 +10,26 @@ import { RequestBuilder } from '../../request-builder';
 
 import { ChatResponse } from '../../models/chat-response';
 
-export interface GetChatsByReciever$Params {
-}
+export interface GetChatsByReciever$Params {}
 
-export function getChatsByReciever(http: HttpClient, rootUrl: string, params?: GetChatsByReciever$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<ChatResponse>>> {
+export function getChatsByReciever(
+  http: HttpClient,
+  rootUrl: string,
+  params?: GetChatsByReciever$Params,
+  context?: HttpContext
+): Observable<StrictHttpResponse<Array<ChatResponse>>> {
   const rb = new RequestBuilder(rootUrl, getChatsByReciever.PATH, 'get');
   if (params) {
   }
 
-  return http.request(
-    rb.build({ responseType: 'blob', accept: '*/*', context })
-  ).pipe(
-    filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
-    map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<Array<ChatResponse>>;
-    })
-  );
+  return http
+    .request(rb.build({ responseType: 'blob', accept: '*/*', context }))
+    .pipe(
+      filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<Array<ChatResponse>>;
+      })
+    );
 }
 
 getChatsByReciever.PATH = '/api/v1/chats';
