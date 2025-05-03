@@ -1,2 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 @import "tailwindcss";
+
+* {
+  margin: 0;
+
+  box-sizing: border-box;
+}
+
+@theme {
+  --color-primary: #222e35;
+  --color-primary-light: #2a3942;
+  --color-secondary: #111b21;
+  --color-secondary-light: #2a3942;
+  --color-accent: #25d366;
+}
