@@ -1,6 +1,7 @@
 package com.amanso.backend.message;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -62,7 +63,7 @@ public class MessageService {
      * The messages are retrieved from the messageRepository using the chatId.
      * 
      */
-    public List<MessageResponse> findMessagesByChatId(String chatId) {
+    public List<MessageResponse> findMessagesByChatId(UUID chatId) {
         return messageRepository.findMessagesByChatId(chatId)
                 .stream()
                 .map(mapper::toMessageResponse)
@@ -70,11 +71,11 @@ public class MessageService {
     }
 
     @Transactional
-    public void setMessagesToSeenByChatId(String chatId, Authentication authentication) {
+    public void setMessagesToSeenByChatId(UUID chatId, Authentication authentication) {
         Chat chat = chatRepository.findById(chatId)
                 .orElseThrow(() -> new EntityNotFoundException("Chat not found"));
 
-        final String recieverId = getRecieverId(chat, authentication);
+        final UUID recieverId = getRecieverId(chat, authentication);
 
         messageRepository.setMessagesToSeenByChatId(chatId, MessageState.SENT, MessageState.SEEN);
 
@@ -88,12 +89,12 @@ public class MessageService {
         notificationService.sendNotification(recieverId, notification);
     }
 
-    public void uploadMediaMessage(String chatId, MultipartFile file, Authentication authentication) {
+    public void uploadMediaMessage(UUID chatId, MultipartFile file, Authentication authentication) {
         Chat chat = chatRepository.findById(chatId)
                 .orElseThrow(() -> new EntityNotFoundException("Chat not found"));
 
-        final String senderId = getSenderId(chat, authentication);
-        final String receiverId = getRecieverId(chat, authentication);
+        final UUID senderId = getSenderId(chat, authentication);
+        final UUID receiverId = getRecieverId(chat, authentication);
 
         final String filePath = fileService.saveFile(file, senderId);
 
@@ -128,18 +129,18 @@ public class MessageService {
      * If the user is the receiver, return the sender id.
      */
 
-    private String getSenderId(Chat chat, Authentication authentication) {
-        if (String.valueOf(chat.getSender().getId()).equals(authentication.getName())) {
-            return String.valueOf(chat.getSender().getId());
+    private UUID getSenderId(Chat chat, Authentication authentication) {
+        if (chat.getSender().getId().equals(UUID.fromString(authentication.getName()))) {
+            return chat.getSender().getId();
         }
-        return String.valueOf(chat.getReceiver().getId());
+        return chat.getReceiver().getId();
     }
 
-    private String getRecieverId(Chat chat, Authentication authentication) {
-        if (String.valueOf(chat.getSender().getId()).equals(authentication.getName())) {
-            return String.valueOf(chat.getReceiver().getId());
+    private UUID getRecieverId(Chat chat, Authentication authentication) {
+        if (chat.getSender().getId().equals(UUID.fromString(authentication.getName()))) {
+            return (chat.getReceiver().getId());
         }
-        return String.valueOf(chat.getSender().getId());
+        return chat.getSender().getId();
 
     }
 
