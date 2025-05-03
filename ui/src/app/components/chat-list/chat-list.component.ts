@@ -1,12 +1,17 @@
-import { Component, Input } from '@angular/core';
+import { Component, input, InputSignal } from '@angular/core';
 import { ChatResponse } from '../../services/models';
+import { IconComponent } from '../shared/icon/icon.component';
 
 @Component({
   selector: 'app-chat-list',
-  imports: [],
+  imports: [IconComponent],
   templateUrl: './chat-list.component.html',
   styles: '',
 })
 export class ChatListComponent {
-  @Input() chatList: ChatResponse[] = [];
+  searchContact() {
+    throw new Error('Method not implemented.');
+  }
+  chatList: InputSignal<ChatResponse[]> = input<ChatResponse[]>([]);
+  searchNewContact: boolean = true;
 }
