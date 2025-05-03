@@ -21,6 +21,7 @@ public class UserResponse {
     private String lastName;
     private String email;
     private LocalDateTime lastSeen;
+    private String state;
     private boolean isOnline; // This field is not stored in the database, but is calculated based on the
                               // lastSeen field.
 
