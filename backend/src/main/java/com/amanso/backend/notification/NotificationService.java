@@ -1,5 +1,7 @@
 package com.amanso.backend.notification;
 
+import java.util.UUID;
+
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +15,9 @@ public class NotificationService {
 
     private final SimpMessagingTemplate messagingTemplate;
 
-    public void sendNotification(String destination, Notification payload) {
+    public void sendNotification(UUID destination, Notification payload) {
         log.info("Sending notification to {}: {}", destination, payload);
-        messagingTemplate.convertAndSendToUser(destination, "/chat", payload);
+        messagingTemplate.convertAndSendToUser(String.valueOf(destination), "/chat", payload);
     }
 
 }
