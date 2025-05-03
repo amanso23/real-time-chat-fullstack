@@ -10,22 +10,26 @@ import { RequestBuilder } from '../../request-builder';
 
 import { UserResponse } from '../../models/user-response';
 
-export interface FindAllUsersExceptSelf$Params {
-}
+export interface FindAllUsersExceptSelf$Params {}
 
-export function findAllUsersExceptSelf(http: HttpClient, rootUrl: string, params?: FindAllUsersExceptSelf$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<UserResponse>>> {
+export function findAllUsersExceptSelf(
+  http: HttpClient,
+  rootUrl: string,
+  params?: FindAllUsersExceptSelf$Params,
+  context?: HttpContext
+): Observable<StrictHttpResponse<Array<UserResponse>>> {
   const rb = new RequestBuilder(rootUrl, findAllUsersExceptSelf.PATH, 'get');
   if (params) {
   }
 
-  return http.request(
-    rb.build({ responseType: 'blob', accept: '*/*', context })
-  ).pipe(
-    filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
-    map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<Array<UserResponse>>;
-    })
-  );
+  return http
+    .request(rb.build({ responseType: 'json', accept: '*/*', context }))
+    .pipe(
+      filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<Array<UserResponse>>;
+      })
+    );
 }
 
 findAllUsersExceptSelf.PATH = '/api/v1/users';
