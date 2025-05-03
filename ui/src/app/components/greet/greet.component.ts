@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { IconComponent } from '../shared/icon/icon.component';
 
 @Component({
   selector: 'app-greet',
-  imports: [],
+  imports: [IconComponent],
   templateUrl: './greet.component.html',
   styles: ``,
 })
