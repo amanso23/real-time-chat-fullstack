@@ -7,17 +7,24 @@
       class="flex flex-col justify-between items-start p-3 bg-primary-light h-full"
     >
       <span>
-        <lucide-icon [img]="MessageCircleIcon" class="{{ iconClass }}" />
+        <app-icon [icon]="'MessageCircleIcon'" />
       </span>
       <div class="flex flex-col items-center gap-2">
-        <lucide-icon [img]="UserIcon" class="{{ iconClass }}" />
-        <lucide-icon [img]="DoorOpen" class="{{ iconClass }}" />
+        <app-icon [icon]="'UserIcon'" />
+        <app-icon [icon]="'DoorOpen'" />
       </div>
     </div>
 
     <div class="flex w-full">
       <div class="w-full">
+        @if (chatList.length !== 0) {
         <app-chat-list [chatList]="chatList" />
+        }@else {
+        <div class="flex flex-col items-center justify-center w-full h-full">
+          <h1 class="text-2xl text-white">No chats available</h1>
+          <p class="text-sm text-gray-400">Start a new chat!</p>
+        </div>
+        }
       </div>
     </div>
   </div>
