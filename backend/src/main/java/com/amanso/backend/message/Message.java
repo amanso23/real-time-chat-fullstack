@@ -8,6 +8,8 @@ import jakarta.persistence.GeneratedValue;
 
 import static jakarta.persistence.GenerationType.SEQUENCE;
 
+import java.util.UUID;
+
 import com.amanso.backend.chat.Chat;
 import com.amanso.backend.common.BaseAuditingEntity;
 
@@ -57,9 +59,9 @@ public class Message extends BaseAuditingEntity {
     private Chat chat;
 
     @Column(name = "sender_id", nullable = false)
-    private String senderId;
+    private UUID senderId;
     @Column(name = "receiver_id", nullable = false)
-    private String receiverId;
+    private UUID receiverId;
 
     private String mediaFilePath;
 
