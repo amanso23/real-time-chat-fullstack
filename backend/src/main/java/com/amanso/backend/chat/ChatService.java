@@ -2,6 +2,7 @@ package com.amanso.backend.chat;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,7 @@ public class ChatService {
     @Transactional(readOnly = true)
     public List<ChatResponse> getChatByRecieverId(Authentication currentUser) {
         // Retrieve the current user's ID from the authentication object
-        final String userId = currentUser.getName();
+        final UUID userId = UUID.fromString(currentUser.getName());
         return chatRepository.findChatBySenderId(userId)
                 .stream()
                 .map(chat -> chatMapper.toChatResponse(chat, userId))
@@ -32,7 +33,7 @@ public class ChatService {
 
     }
 
-    public String createdChat(String senderId, String recieverId) {
+    public UUID createdChat(UUID senderId, UUID recieverId) {
         // Check if the chat already exists between the sender and receiver
         // If it does, return the existing chat ID
         Optional<Chat> existingChat = chatRepository.findChatBySenderIdAndReceiverId(senderId, recieverId);
