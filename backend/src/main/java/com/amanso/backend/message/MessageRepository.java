@@ -1,6 +1,7 @@
 package com.amanso.backend.message;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -9,7 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 public interface MessageRepository extends JpaRepository<Message, Long> {
 
     @Query(name = MessageConstants.FIND_MESSAGES_BY_CHAT_ID)
-    List<Message> findMessagesByChatId(String chatId);
+    List<Message> findMessagesByChatId(UUID chatId);
 
     /*
      * Update all messages for a given chat id to a new state, where the old state
@@ -18,6 +19,6 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
      */
     @Query(name = MessageConstants.SET_MESSAGES_TO_SEEN_BY_CHAT_ID)
     @Modifying
-    void setMessagesToSeenByChatId(String chatId, MessageState oldState, MessageState newState);
+    void setMessagesToSeenByChatId(UUID chatId, MessageState oldState, MessageState newState);
 
 }
