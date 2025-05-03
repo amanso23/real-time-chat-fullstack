@@ -1,26 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  LucideAngularModule,
-  MessageCircleIcon,
-  UserIcon,
-  DoorOpen,
-} from 'lucide-angular';
 import { ChatListComponent } from '../../components/chat-list/chat-list.component';
-import { KeycloakService } from '../../utils/keycloak/keycloak.service';
 import { ChatService } from '../../services/services';
 import { ChatResponse } from '../../services/models';
+import { IconComponent } from '../../components/shared/icon/icon.component';
 
 @Component({
   selector: 'app-main',
-  imports: [LucideAngularModule, ChatListComponent],
+  imports: [IconComponent, ChatListComponent],
   templateUrl: './main.component.html',
   styles: '',
 })
 export class MainComponent implements OnInit {
-  readonly MessageCircleIcon = MessageCircleIcon;
-  readonly UserIcon = UserIcon;
-  readonly DoorOpen = DoorOpen;
-
   readonly iconClass = 'size-6 text-white cursor-pointer';
 
   chatList: ChatResponse[] = [];
@@ -34,7 +24,7 @@ export class MainComponent implements OnInit {
   private getAllChats() {
     this.chatService.getChatsByReciever().subscribe({
       next: (res) => {
-        this.chatList = res;
+        this.chatList = Array.isArray(res) ? res : res ? [res] : [];
       },
       error: (err) => {
         console.error('Error fetching chat list:', err);
