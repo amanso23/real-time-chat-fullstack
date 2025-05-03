@@ -14,6 +14,7 @@ import static jakarta.persistence.GenerationType.UUID;
 import java.beans.Transient;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -58,7 +59,7 @@ public class Chat extends BaseAuditingEntity {
 
     @Id
     @GeneratedValue(strategy = UUID)
-    private String id;
+    private UUID id;
 
     @ManyToOne
     @JoinColumn(name = "sender_id", nullable = false)
@@ -77,8 +78,8 @@ public class Chat extends BaseAuditingEntity {
      * name.
      */
     @Transient
-    public String getChatName(final String senderId) {
-        if (String.valueOf(sender.getId()).equals(senderId)) {
+    public String getChatName(final UUID senderId) {
+        if (String.valueOf(sender.getId()).equals(String.valueOf(senderId))) {
             return receiver.getFirstName() + " " + receiver.getLastName();
         } else {
             return sender.getFirstName() + " " + sender.getLastName();
@@ -91,7 +92,7 @@ public class Chat extends BaseAuditingEntity {
      * and the message state is SENT. It returns the count of such messages.
      */
     @Transient
-    public Long getUnreadMessagesCount(final String senderId) {
+    public Long getUnreadMessagesCount(final UUID senderId) {
         return messages
                 .stream()
                 .filter(m -> m.getReceiverId().equals(senderId))
