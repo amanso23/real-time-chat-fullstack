@@ -1,15 +1,14 @@
-<ul class="flex flex-col items-center">
-  @for (chat of chatList; track chat.id) {
-  <li class="w-full">
-    <a
-      class="flex flex-col items-start justify-center bg-secondary text-white shadow-md hover:bg-accent transition duration-300 ease-in-out px-4 py-4"
-      href="#"
-    >
-      <span class="text-sm text-center">{{ chat.name }}</span>
-      @if ($index < chatList.length - 1) {
-      <p>pepe</p>
-      }
-    </a>
-  </li>
-  }
-</ul>
+<div class="sticky top-0 bg-white">
+  <div class="flex justify-center items-center gap-2 p-2">
+    <h1>Chat</h1>
+    @if (!searchNewContact) {
+    <span (click)="searchContact()">
+      <app-icon [icon]="'UserIcon'" [color]="'text-black'" />
+    </span>
+    } @else {
+    <span (click)="searchNewContact = false">
+      <app-icon [icon]="'MessageCirclePlus'" [color]="'text-black'" />
+    </span>
+    }
+  </div>
+</div>
