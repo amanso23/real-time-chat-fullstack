@@ -1,5 +1,7 @@
 package com.amanso.backend.common;
 
+import java.util.UUID;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,6 +15,6 @@ import lombok.Setter;
 @Builder
 public class StringResponse {
 
-    private String response;
+    private UUID response;
 
 }
