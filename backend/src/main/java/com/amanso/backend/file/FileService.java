@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.UUID;
 
 import static java.lang.System.currentTimeMillis;
 
@@ -26,7 +27,7 @@ public class FileService {
     @Value("${spring.application.file.uploads.media-output-path}")
     private String fileUploadPath;
 
-    public String saveFile(@NonNull MultipartFile sourceFile, @NonNull String userId) {
+    public String saveFile(@NonNull MultipartFile sourceFile, @NonNull UUID userId) {
         final String fileUploadSubPath = "users" + separator + userId;
         return uploadFile(sourceFile, fileUploadSubPath);
     }
