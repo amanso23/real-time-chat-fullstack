@@ -1,5 +1,7 @@
 package com.amanso.backend.notification;
 
+import java.util.UUID;
+
 import com.amanso.backend.message.MessageType;
 
 import lombok.AllArgsConstructor;
@@ -15,10 +17,10 @@ import lombok.Setter;
 @Builder
 public class Notification {
 
-    private String chatId;
+    private UUID chatId;
     private String content;
-    private String senderId;
-    private String receiverId;
+    private UUID senderId;
+    private UUID receiverId;
     private String chatName;
     private MessageType messageType;
     private NotificationType notificationType;
