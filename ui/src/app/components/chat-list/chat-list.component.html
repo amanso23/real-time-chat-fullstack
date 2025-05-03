@@ -1,14 +1,110 @@
-<div class="sticky top-0 bg-white">
-  <div class="flex justify-center items-center gap-2 p-2">
-    <h1>Chat</h1>
+<div class="sticky top-0 flex flex-col gap-y-4 p-6">
+  <div class="flex items-center justify-between gap-2 text-white">
+    <h1 class="text-2xl font-medium">Chats</h1>
     @if (!searchNewContact) {
     <span (click)="searchContact()">
-      <app-icon [icon]="'UserIcon'" [color]="'text-black'" />
+      <app-icon [icon]="'CircleX'" [color]="'text-white'" />
     </span>
     } @else {
     <span (click)="searchNewContact = false">
-      <app-icon [icon]="'MessageCirclePlus'" [color]="'text-black'" />
+      <app-icon [icon]="'MessageSquarePlus'" [color]="'text-white'" />
     </span>
     }
   </div>
+
+  <div class="flex flex-col gap-2">
+    <div class="flex items-center gap-4 px-4 py-2 rounded-md bg-secondary">
+      <span>
+        <app-icon [icon]="'Search'" [color]="'text-gray-400'" />
+      </span>
+      <input
+        type="text"
+        class="flex-1 placeholder:text-sm focus:outline-0 text-gray-400"
+        placeholder="Search in the chat"
+        aria-label="Search in the chat input field"
+      />
+    </div>
+    <ul class="flex gap-2">
+      @for (item of ['All', 'Unread', 'Favorites']; track $index) {
+      <li
+        class="rounded-full bg-secondary text-sm text-gray-400 px-3 py-1.5 cursor-pointer hover:bg-accent hover:text-white transition-all duration-300 ease-in-out"
+      >
+        {{ item }}
+      </li>
+      }
+    </ul>
+  </div>
+</div>
+
+<div class="p-6">
+  @if(chatList().length !== 0 && !searchNewContact ) {
+  <ul class="flex flex-col justify-start">
+    @for (chat of chatList(); track chat.id) {
+    <li class="flex items-center px-2 py-2" (click)="openChat(chat.id)">
+      <!-- <img src="user.avif" alt="User profile picture" /> -->
+      <div class="flex flex-col">
+        <h2>{{ chat.name }}</h2>
+        <small class="text-gray-400">
+          @if(chat.lastMessageContent === 'Attachment') {
+          <app-icon [icon]="'Image'" />
+          }
+          {{ wrapMessage(chat.lastMessageContent || "") }}
+        </small>
+      </div>
+      <div class="flex flex-col items-end justify-center">
+        <span
+          ngClass="{chat.unreadMessagesCount > 0 ? 'text-accent' : 'text-gray-400'}"
+        >
+          {{ chat.lastMessageTime | date : "dd.MM.yy HH:mm" }}
+        </span>
+        @if(chat.unreadMessagesCount && chat.unreadMessagesCount > 0) {
+        <span
+          class="bg-accent text-xs text-white rounded-full px-2 py-1 animate-pulse"
+        >
+          {{ chat.unreadMessagesCount }}
+        </span>
+        }
+      </div>
+    </li>
+    }
+  </ul>
+  } @else if (searchNewContact) {
+  <ul class="flex flex-col jusrify-start">
+    @if (contacts && contacts.length > 0) { @for (contact of contacts; track
+    contact.id) {
+    <li (click)="selectContact(contact.id)" class="">
+      <div class="flex items-center gap-4">
+        <img
+          src="user.avif"
+          alt="User profile picture"
+          class="size-12 rounded-full aspect-square"
+        />
+        <div class="flex flex-col text-gray-400">
+          <h2 class="capitalize font-medium">
+            {{ contact.firstName + " " + contact.lastName }}
+          </h2>
+          <span>
+            {{ contact.state || "" }}
+          </span>
+          @if (contact.online) {
+          <small class="text-accent">Online</small>
+          } @else {
+          <small class="opacity-50"
+            >Last seen&nbsp;{{
+              contact.lastSeen | date : "dd.mm.yy HH:mm"
+            }}</small
+          >
+          }
+        </div>
+      </div>
+    </li>
+    } }
+  </ul>
+  } @else {
+  <div class="flex flex-col items-center justify-center w-full h-full">
+    <h1 class="text-lg text-white">No chats available</h1>
+    <p class="text-sm text-gray-400">Start a new chat!</p>
+    <span>😁👍</span>
+  </div>
+  }
 </div>
