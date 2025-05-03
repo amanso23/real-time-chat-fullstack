@@ -1,6 +1,7 @@
 package com.amanso.backend.message;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,7 +50,7 @@ public class MessageController {
     @PostMapping(value = "/upload-media", consumes = "multipart/form-data")
     @ResponseStatus(HttpStatus.CREATED)
     public void uploadMediaMessage(
-            @Parameter() @RequestParam("chat-id") String chatId, @RequestParam("file") MultipartFile file,
+            @Parameter() @RequestParam("chat-id") UUID chatId, @RequestParam("file") MultipartFile file,
             Authentication authentication) {
         messageService.uploadMediaMessage(chatId, file, authentication);
 
@@ -61,12 +62,12 @@ public class MessageController {
      */
     @PatchMapping
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void setMessagesToSeenByChatId(@RequestParam("chat-id") String chatId, Authentication authentication) {
+    public void setMessagesToSeenByChatId(@RequestParam("chat-id") UUID chatId, Authentication authentication) {
         messageService.setMessagesToSeenByChatId(chatId, authentication);
     }
 
     @GetMapping("/chat/{chat-id}")
-    public ResponseEntity<List<MessageResponse>> getMessages(@PathVariable("chat-id") String chatId) {
+    public ResponseEntity<List<MessageResponse>> getMessages(@PathVariable("chat-id") UUID chatId) {
         return ResponseEntity.ok(messageService.findMessagesByChatId(chatId));
     }
 
