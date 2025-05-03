@@ -1,6 +1,7 @@
 package com.amanso.backend.chat;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,7 +16,7 @@ import lombok.Setter;
 @Builder
 public class ChatResponse {
 
-    private String id;
+    private UUID id;
     private String name;
     private Long unreadMessagesCount;
     private String lastMessageContent;
