@@ -1,6 +1,7 @@
 package com.amanso.backend.chat;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -35,9 +36,9 @@ public class ChatController {
      */
     @PostMapping
     public ResponseEntity<StringResponse> createChat(
-            @RequestParam(value = "sender-id") String senderId,
-            @RequestParam(value = "receiver-id") String receiverId) {
-        final String chatId = chatService.createdChat(senderId, receiverId);
+            @RequestParam(value = "sender-id") UUID senderId,
+            @RequestParam(value = "receiver-id") UUID receiverId) {
+        final UUID chatId = chatService.createdChat(senderId, receiverId);
         StringResponse response = StringResponse.builder()
                 .response(chatId)
                 .build();
