@@ -2,6 +2,7 @@ package com.amanso.backend.user;
 
 import java.time.LocalDateTime;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,7 @@ public class UserMapper {
         User user = new User();
 
         if (attributes.containsKey("sub")) {
-            user.setId(Long.parseLong((String) attributes.get("sub")));
+            user.setId(UUID.fromString((String) attributes.get("sub")));
         }
 
         if (attributes.containsKey("given_name")) {
@@ -38,6 +39,24 @@ public class UserMapper {
 
         return user;
 
+    }
+
+    public void updateUserFromAttributes(User user, Map<String, Object> attributes) {
+        if (attributes.containsKey("given_name")) {
+            user.setFirstName((String) attributes.get("given_name"));
+        } else if (attributes.containsKey("nickname")) {
+            user.setFirstName((String) attributes.get("nickname"));
+        }
+
+        if (attributes.containsKey("family_name")) {
+            user.setLastName((String) attributes.get("family_name"));
+        }
+
+        if (attributes.containsKey("email")) {
+            user.setEmail((String) attributes.get("email"));
+        }
+
+        user.setLastSeen(LocalDateTime.now());
     }
 
     public UserResponse toUserResponse(User user) {
