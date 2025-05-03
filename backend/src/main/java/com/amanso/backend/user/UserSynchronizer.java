@@ -38,6 +38,7 @@ public class UserSynchronizer {
                     },
                     () -> {
                         User newUser = userMapper.fromTokenAttributes(token.getClaims());
+                        newUser.setState("😍😒❤️💺😊😊😒✖️⚠️🔁");
                         userRepository.save(newUser);
                         log.info("Created new user with email: {}", email);
                     });
