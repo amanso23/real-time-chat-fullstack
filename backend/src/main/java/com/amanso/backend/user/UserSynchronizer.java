@@ -27,18 +27,18 @@ public class UserSynchronizer {
         getUserEmail(token).ifPresent(email -> {
             log.info("Synchronizing user with email: {}", email);
             Optional<User> optionalUser = userRepository.findByEmail(email);
-            User user = userMapper.fromTokenAttributes(token.getClaims());
 
             // Update the user with the new attributes from the token if it exists
             // If it doesn't exist, create a new user with the attributes from the token
             optionalUser.ifPresentOrElse(
                     existingUser -> {
-                        user.setId(existingUser.getId());
-                        userRepository.save(user);
+                        userMapper.updateUserFromAttributes(existingUser, token.getClaims());
+                        userRepository.save(existingUser);
                         log.info("Updated existing user with ID: {}", existingUser.getId());
                     },
                     () -> {
-                        userRepository.save(user);
+                        User newUser = userMapper.fromTokenAttributes(token.getClaims());
+                        userRepository.save(newUser);
                         log.info("Created new user with email: {}", email);
                     });
         });
