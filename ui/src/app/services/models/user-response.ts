@@ -9,4 +9,5 @@ export interface UserResponse {
   lastName?: string;
   lastSeen?: string;
   online?: boolean;
+  state?: string;
 }
