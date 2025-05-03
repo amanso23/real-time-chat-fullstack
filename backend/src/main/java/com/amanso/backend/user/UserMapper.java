@@ -67,6 +67,7 @@ public class UserMapper {
                 .email(user.getEmail())
                 .lastSeen(user.getLastSeen())
                 .isOnline(user.isOnline())
+                .state(user.getState())
                 .build();
 
     }
