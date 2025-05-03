@@ -1,16 +1,14 @@
 package com.amanso.backend.user;
 
-import static jakarta.persistence.GenerationType.IDENTITY;
-
 import java.beans.Transient;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 import com.amanso.backend.chat.Chat;
 import com.amanso.backend.common.BaseAuditingEntity;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
@@ -38,8 +36,7 @@ public class User extends BaseAuditingEntity {
     private static final int LAST_ACTIVE_INTERVAL = 5;
 
     @Id
-    @GeneratedValue(strategy = IDENTITY)
-    private Long id;
+    private UUID id;
     private String firstName;
     private String lastName;
     private String email;
