@@ -1,11 +1,13 @@
 package com.amanso.backend.chat;
 
+import java.util.UUID;
+
 import org.springframework.stereotype.Service;
 
 @Service
 public class ChatMapper {
 
-    public ChatResponse toChatResponse(Chat chat, String userId) {
+    public ChatResponse toChatResponse(Chat chat, UUID userId) {
         return ChatResponse.builder()
                 .id(chat.getId())
                 .name(chat.getChatName(userId))
