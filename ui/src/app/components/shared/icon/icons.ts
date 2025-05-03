@@ -2,12 +2,18 @@ import {
   MessageCircleIcon,
   UserIcon,
   DoorOpen,
-  MessageCirclePlus,
+  MessageSquarePlus,
+  Search,
+  Image,
+  CircleX,
 } from 'lucide-angular';
 
 export const ICONS = {
   MessageCircleIcon: MessageCircleIcon,
   UserIcon: UserIcon,
   DoorOpen: DoorOpen,
-  MessageCirclePlus: MessageCirclePlus,
+  MessageSquarePlus: MessageSquarePlus,
+  Search: Search,
+  Image: Image,
+  CircleX: CircleX,
 } as const;
