@@ -1,6 +1,7 @@
 package com.amanso.backend.user;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,7 +16,7 @@ import lombok.Setter;
 @Builder
 public class UserResponse {
 
-    private Long id;
+    private UUID id;
     private String firstName;
     private String lastName;
     private String email;
